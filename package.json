@@ -7,7 +7,8 @@
     "dev": "concurrently --kill-others \"vite serve src/app\" \"vite serve src/web\"",
     "build": "tsc && vite build src/app && vite build src/web",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "tauri:build": "NO_STRIP=true pnpm tauri build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
