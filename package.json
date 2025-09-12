@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently --kill-others \"vite serve src/app\" \"vite serve src/web\"",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build src/app && vite build src/web",
     "preview": "vite preview",
     "tauri": "tauri"
   },

@@ -26,5 +26,6 @@
     }
   },
   "include": ["src"],
+  "exclude": ["src/app/vite.config.ts", "src/web/config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
