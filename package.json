@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --kill-others \"vite serve src/app\" \"vite serve src/web\"",
+    "dev": "concurrently --kill-others \"vite serve src/app\" \"vite serve src/web --host\"",
     "build": "tsc && vite build src/app && vite build src/web",
     "preview": "vite preview",
     "tauri": "tauri",
