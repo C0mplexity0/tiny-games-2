@@ -9,7 +9,9 @@ pub fn run() {
                 return Ok(()) // Vite will already host a development server
             }
 
-            let resource_path = app.path().resolve("web", BaseDirectory::Resource)?;
+            let resource_path = app.path().resolve("_up_/src/web/dist", BaseDirectory::Resource)?;
+
+            println!("Starting Rocket server to serve static files from: {}", resource_path.display());
 
             tauri::async_runtime::spawn(async move {
                 let server = rocket::fs::FileServer::from(resource_path);
