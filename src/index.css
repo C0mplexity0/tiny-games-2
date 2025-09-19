@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" source(".");
 @import "tw-animate-css";
 
 @theme inline {
@@ -40,7 +40,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 1rem;
   --background: #090809;
   --foreground: #EED6F2;
   --card: #0D0C0D;
