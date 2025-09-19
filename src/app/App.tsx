@@ -6,6 +6,7 @@ import { createBrowserRouter } from "react-router";
 import AppHomePage from "./pages/Home";
 import { ReactNode, useEffect, useState } from "react";
 import { getCurrentWindow, Window } from "@tauri-apps/api/window";
+import { TinyGamesLogoWithText } from "@/components/ui/logo";
 
 const router = createBrowserRouter([
   {
@@ -29,21 +30,26 @@ export function App() {
   useEffect(() => {
     const window = getCurrentWindow()
     setWindow(window)
-    window.isMaximized().then((maximized) => {
-      setIsMaximized(maximized)
-    })
-  }, [window])
+    
+    const fetchIsMaximised = async () => {
+      setIsMaximized(await window.isMaximized())
+    }
+
+    fetchIsMaximised()
+  }, [])
 
   return (
     <main className="size-full flex flex-col">
       <div className="bg-card h-9 p-1 w-full flex flex-row gap-1">
         <div 
-          className="bg-card h-7 w-full flex-1"
+          className="bg-card h-7 w-full flex-1 p-2"
           style={{
             userSelect: "none"
           }}
           data-tauri-drag-region
-        ></div>
+        >
+          <TinyGamesLogoWithText className="pointer-events-none w-28" />
+        </div>
         <WindowButton
           onClick={() => {
             if (window)
