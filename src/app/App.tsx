@@ -7,6 +7,7 @@ import AppHomePage from "./pages/Home";
 import { ReactNode, useEffect, useState } from "react";
 import { getCurrentWindow, Window } from "@tauri-apps/api/window";
 import { TinyGamesLogoWithText } from "@/components/ui/logo";
+import LoadingScreen from "@/components/ui/loading-screen";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ export function App() {
 
   return (
     <main className="size-full flex flex-col">
+      <LoadingScreen />
       <div className="bg-card h-9 p-1 w-full flex flex-row gap-1">
         <div 
           className="bg-card h-7 w-full flex-1 p-2"
