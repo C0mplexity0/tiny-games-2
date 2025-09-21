@@ -68,7 +68,12 @@ export function App() {
         >
             {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
         </WindowButton>
-        <WindowButton>
+        <WindowButton
+          onClick={() => {
+            if (window)
+              window.close()
+          }}
+        >
             <LucideX />
         </WindowButton>
       </div>
