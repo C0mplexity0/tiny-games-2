@@ -99,7 +99,3 @@ html, body, #root {
   height: 100%;
 }
 
-*[data-tauri-drag-region] {
-  app-region: drag;
-}
-
