@@ -5,7 +5,7 @@ import { createBrowserRouter } from "react-router";
 
 import AppHomePage from "./pages/Home";
 import { ReactNode, useEffect, useState } from "react";
-import { getCurrentWindow, Window } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TinyGamesLogoWithText } from "@/components/ui/logo";
 import LoadingScreen from "@/components/ui/loading-screen";
 
@@ -25,18 +25,21 @@ function WindowButton({ children, onClick }: { children: ReactNode, onClick?: ()
 }
 
 export function App() {
-  const [window, setWindow] = useState<Window | null>(null)
+  const window = getCurrentWindow()
   const [isMaximized, setIsMaximized] = useState<boolean>(false)
 
-  useEffect(() => {
-    const window = getCurrentWindow()
-    setWindow(window)
-    
-    const fetchIsMaximised = async () => {
-      setIsMaximized(await window.isMaximized())
-    }
+  const fetchIsMaximised = async () => {
+    setIsMaximized(await window.isMaximized())
+  }
 
-    fetchIsMaximised()
+  useEffect(() => {
+    const listener = window.onResized(() => {
+      fetchIsMaximised()
+    })
+
+    return () => {
+      listener.then((f) => f())
+    }
   }, [])
 
   return (
@@ -54,24 +57,21 @@ export function App() {
         </div>
         <WindowButton
           onClick={() => {
-            if (window)
-              window.minimize()
+            window.minimize()
           }}
         >
             <LucideMinus />
         </WindowButton>
         <WindowButton
           onClick={() => {
-            if (window)
-              window.toggleMaximize()
+            window.toggleMaximize()
           }}
         >
             {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
         </WindowButton>
         <WindowButton
           onClick={() => {
-            if (window)
-              window.close()
+            window.close()
           }}
         >
             <LucideX />
