@@ -1,11 +1,38 @@
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/react";
 import { TinyGamesLogoWithText } from "./logo";
+import { useEffect, useState } from "react";
+import { animate } from "motion";
 
 export default function LoadingScreen() {
+  const GRADIENT_WIDTH = 20
+
+  const [loaded, setLoaded] = useState(false)
+
+  const fade = useMotionValue(`${-GRADIENT_WIDTH}%`)
+  const maskImage = useMotionTemplate`radial-gradient(circle,rgba(0, 0, 0, 0) ${fade}, rgba(0, 0, 0, 1) calc(${fade} + ${GRADIENT_WIDTH}%))`
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      animate(fade, `100%`, { duration: .3 })
+      setLoaded(true)
+    }, 3000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  })
+
   return (
-    <div data-tauri-drag-region className="bg-secondary size-full absolute top-0 left-0 z-100 flex items-center justify-center">
+    <motion.div 
+      data-tauri-drag-region={!loaded} 
+      className={`bg-secondary size-full absolute top-0 left-0 z-100 flex items-center justify-center ${loaded ? "pointer-events-none" : ""}`}
+      style={{
+        maskImage
+      }}
+    >
       <div className="pointer-events-none">
         <TinyGamesLogoWithText className="w-64" />
       </div>
-    </div>
+    </motion.div>
   )
 }
