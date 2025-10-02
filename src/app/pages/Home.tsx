@@ -24,6 +24,16 @@ export default function AppHomePage() {
             <LucideFolder />
           </Button>
         </div>
+        <div className="flex flex-col p-2 pt-0">
+          <Button 
+            variant="secondary"
+            className="flex flex-row h-7"
+            size="sm"
+          >
+            <LucidePlus />
+            <span>Add more content</span>
+          </Button>
+        </div>
       </div>
       <div className="rounded-tl-lg border-t border-l size-full bg-background">
         
