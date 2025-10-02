@@ -14,7 +14,7 @@ export default function AppHomePage() {
         defaultSize={25}
         className="min-w-70"
       >
-        <div className="flex flex-row p-2 gap-1">
+        <div className="flex flex-row p-2 pt-1 gap-1">
           <Subtitle>Installed</Subtitle>
           <div className="flex-1" />
           <Button
