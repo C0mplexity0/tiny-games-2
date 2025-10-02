@@ -1,4 +1,4 @@
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import { TinyGamesLogoWithText } from "./logo";
 import { useEffect, useState } from "react";
 import { animate } from "motion";
