@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Subtitle from "@/components/ui/text";
 import { LucideFolder, LucidePlus } from "lucide-react";
 
 export default function AppHomePage() {
   return (
-    <div className="size-full bg-card flex flex-row">
-      <div 
-        className="w-100"
+    <ResizablePanelGroup direction="horizontal" className="size-full bg-card flex flex-row">
+      <ResizablePanel 
+        minSize={20}
+        className="min-w-70"
       >
         <div className="flex flex-row p-2 gap-1">
           <Subtitle>Installed</Subtitle>
@@ -34,10 +36,11 @@ export default function AppHomePage() {
             <span>Add more content</span>
           </Button>
         </div>
-      </div>
-      <div className="rounded-tl-lg border-t border-l size-full bg-background">
+      </ResizablePanel>
+      <ResizableHandle className="border-none bg-transparent" />
+      <ResizablePanel minSize={30} className="rounded-tl-lg border-t border-l size-full bg-background">
         
-      </div>
-    </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   )
 }
