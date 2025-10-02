@@ -47,7 +47,7 @@ export function App() {
       <LoadingScreen />
       <div className="bg-card h-9 p-1 w-full flex flex-row gap-1">
         <div 
-          className="bg-card h-7 w-full flex-1 p-2"
+          className="bg-card h-7 w-full flex-1 flex items-center p-1"
           style={{
             userSelect: "none"
           }}
