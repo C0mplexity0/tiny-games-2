@@ -8,6 +8,7 @@ export default function AppHomePage() {
     <ResizablePanelGroup direction="horizontal" className="size-full bg-card flex flex-row">
       <ResizablePanel 
         minSize={20}
+        defaultSize={25}
         className="min-w-70"
       >
         <div className="flex flex-row p-2 gap-1">
@@ -38,7 +39,7 @@ export default function AppHomePage() {
         </div>
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
-      <ResizablePanel minSize={30} className="rounded-tl-lg border-t border-l size-full bg-background">
+      <ResizablePanel minSize={30} defaultSize={75} className="rounded-tl-lg border-t border-l size-full bg-background">
         
       </ResizablePanel>
     </ResizablePanelGroup>
