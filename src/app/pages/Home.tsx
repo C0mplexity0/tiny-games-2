@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Subtitle from "@/components/ui/text";
 import { LucideFolder, LucidePlus } from "lucide-react";
+import { useState } from "react";
 
 export default function AppHomePage() {
+  const [selectedGame] = useState<number | undefined>()
+
   return (
     <ResizablePanelGroup direction="horizontal" className="size-full bg-card flex flex-row">
       <ResizablePanel 
@@ -40,7 +43,13 @@ export default function AppHomePage() {
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
       <ResizablePanel minSize={30} defaultSize={75} className="rounded-tl-lg border-t border-l size-full bg-background">
-        
+        {selectedGame ? null : 
+        <div className="size-full flex justify-center items-center">
+          <div>
+            <p>No games :(</p>
+          </div>
+        </div>
+        }
       </ResizablePanel>
     </ResizablePanelGroup>
   )
