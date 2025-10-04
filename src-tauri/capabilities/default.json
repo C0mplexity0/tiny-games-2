@@ -19,16 +19,23 @@
     {
       "identifier": "fs:scope",
       "allow": [
-        { "path": "$APPDATA/**/*" },
-        {  "path": "$APPDATA/" }
+        {
+          "path": "$APPDATA/**/*"
+        },
+        {
+          "path": "$APPDATA/"
+        }
       ],
       "deny": []
     },
     {
       "identifier": "opener:allow-open-path",
       "allow": [
-        { "path": "$APPDATA/**/*" }
+        {
+          "path": "$APPDATA/**/*"
+        }
       ]
-    }
+    },
+    "shell:default"
   ]
 }
