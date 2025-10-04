@@ -4,7 +4,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import Subtitle from "@/components/ui/text";
 import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus, LucideRefreshCcw } from "lucide-react";
 import { useState } from "react";
-import { gamesManager } from "../main";
+import { gamesManager } from "../main.ts";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
 import { appDataDir, sep } from "@tauri-apps/api/path";
