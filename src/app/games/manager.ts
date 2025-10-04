@@ -59,8 +59,10 @@ export default class GamesManager {
         continue
 
       const config = await readDataFile(gamesPath + sep() + entries[i].name + sep() + "game.json")
-      if (!config)
-        return
+      if (config === undefined) {
+        this.showFetchingGameFailedMessage(entries[i].name, "Missing game config (game.json).")
+        continue
+      }
 
       let configJSON
 
@@ -77,8 +79,8 @@ export default class GamesManager {
       if (this.jsonIsGameConfig(configJSON))
         this.games.push(new Game(entries[i].name, configJSON))
       else {
-        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be invalid.")
-        console.warn("Game config appears to be invalid: " + entries[i].name)
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be missing certain fields.")
+        console.warn("Game config appears to be missing certain fields: " + entries[i].name)
       }
     }
   }

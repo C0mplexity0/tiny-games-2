@@ -68,12 +68,14 @@ export async function dataFileExists(path: string) {
 
 export async function readDataFile(path: string) {
   const fileExists = await dataFileExists(path);
+  console.log(fileExists)
   if (!fileExists)
     return
 
   path = applyPathPrefix(path);
 
   const content = await readTextFile(path, { baseDir: BaseDirectory.AppData })
+  console.log(content)
 
   return content
 }
