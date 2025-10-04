@@ -9,7 +9,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TinyGamesLogoWithText } from "@/components/ui/logo";
 import LoadingScreen from "@/components/ui/loading-screen";
 import { Toaster } from "sonner";
-import { init } from "./main";
+import { init } from "./main.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const router = createBrowserRouter([
@@ -19,11 +19,18 @@ const router = createBrowserRouter([
   },
 ]);
 
-function WindowButton({ children, onClick }: { children: ReactNode, onClick?: () => void }) {
+function WindowButton({ children, onClick, tooltip }: { children: ReactNode, onClick?: () => void, tooltip: string }) {
   return (
-    <Button variant={"secondary"} size={"icon"} className="size-7" onClick={onClick}>
-      {children}
-    </Button>
+    <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant={"secondary"} size={"icon"} className="size-7" onClick={onClick}>
+            {children}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{tooltip}</p>
+        </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -70,48 +77,30 @@ export function App() {
         >
           <TinyGamesLogoWithText className="pointer-events-none w-28" />
         </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <WindowButton
-              onClick={() => {
-                window.minimize()
-              }}
-            >
-                <LucideMinus />
-            </WindowButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Minimise window</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <WindowButton
-              onClick={() => {
-                window.toggleMaximize()
-              }}
-            >
-                {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
-            </WindowButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Toggle maximise</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <WindowButton
-              onClick={() => {
-                window.close()
-              }}
-            >
-                <LucideX />
-            </WindowButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Close</p>
-          </TooltipContent>
-        </Tooltip>
+        <WindowButton
+          onClick={() => {
+            window.minimize()
+          }}
+          tooltip="Minimise"
+        >
+            <LucideMinus />
+        </WindowButton>
+        <WindowButton
+          onClick={() => {
+            window.toggleMaximize()
+          }}
+          tooltip="Toggle maximise"
+        >
+            {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
+        </WindowButton>
+        <WindowButton
+          tooltip="Close"
+          onClick={() => {
+            window.close()
+          }}
+        >
+            <LucideX />
+        </WindowButton>
       </div>
       <RouterProvider router={router} />
       <Toaster position="bottom-right" />
