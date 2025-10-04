@@ -43,7 +43,7 @@ export default function AppHomePage() {
         </div>
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
-      <ResizablePanel minSize={30} defaultSize={75} className="rounded-tl-lg border-t border-l size-full bg-background">
+      <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-lg border-t border-l size-full bg-background">
         {selectedGame ? null : 
           <div className="flex justify-center items-center size-full">
             <Empty>
@@ -69,7 +69,7 @@ export default function AppHomePage() {
                 size="sm"
               >
                 <a href="#">
-                  Learn More <ArrowUpRightIcon />
+                  Learn more <ArrowUpRightIcon />
                 </a>
               </Button>
             </Empty>
