@@ -4,6 +4,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import Subtitle from "@/components/ui/text";
 import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus, LucideRefreshCcw } from "lucide-react";
 import { useState } from "react";
+import { gamesManager } from "../main";
 
 export default function AppHomePage() {
   const [selectedGame] = useState<number | undefined>()
@@ -21,6 +22,9 @@ export default function AppHomePage() {
           <Button
             variant="secondary"
             size="icon-sm"
+            onClick={() => {
+              gamesManager.fetchGames()
+            }}
           >
             <LucideRefreshCcw />
           </Button>
