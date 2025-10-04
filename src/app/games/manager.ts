@@ -11,9 +11,11 @@ export default class GamesManager {
   private games: Game[]
 
   constructor (private rootDir: string) {
-    this.makeFiles()
-
     this.games = []
+  }
+
+  async load() {
+    this.makeFiles()
     this.fetchGames()
   }
 

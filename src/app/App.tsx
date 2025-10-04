@@ -9,6 +9,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TinyGamesLogoWithText } from "@/components/ui/logo";
 import LoadingScreen from "@/components/ui/loading-screen";
 import { Toaster } from "sonner";
+import { init } from "./main";
 
 const router = createBrowserRouter([
   {
@@ -25,9 +26,21 @@ function WindowButton({ children, onClick }: { children: ReactNode, onClick?: ()
   )
 }
 
+let loaded = false;
+let setLoaded: (loaded: boolean) => void;
+
 export function App() {
+  [loaded, setLoaded] = useState(false)
   const window = getCurrentWindow()
   const [isMaximized, setIsMaximized] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!loaded) {
+      init().then(() => {
+        setLoaded(true)
+      })
+    }
+  })
 
   const fetchIsMaximised = async () => {
     setIsMaximized(await window.isMaximized())
@@ -45,7 +58,7 @@ export function App() {
 
   return (
     <main className="size-full flex flex-col">
-      <LoadingScreen />
+      <LoadingScreen loaded={loaded} />
       <div className="bg-card h-9 p-1 w-full flex flex-row gap-1">
         <div 
           className="bg-card h-7 w-full flex-1 flex items-center p-1"

@@ -1,26 +1,15 @@
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import { TinyGamesLogoWithText } from "./logo";
-import { useEffect, useState } from "react";
 import { animate } from "motion";
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ loaded }: { loaded: boolean }) {
   const GRADIENT_WIDTH = 20
-
-  const [loaded, setLoaded] = useState(false)
 
   const fade = useMotionValue(`${-GRADIENT_WIDTH}%`)
   const maskImage = useMotionTemplate`radial-gradient(circle,rgba(0, 0, 0, 0) ${fade}, rgba(0, 0, 0, 1) calc(${fade} + ${GRADIENT_WIDTH}%))`
 
-  useEffect(() => {
-    const interval = setTimeout(() => {
-      animate(fade, `100%`, { duration: .3 })
-      setLoaded(true)
-    }, 3000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  })
+  if (loaded)
+    animate(fade, `100%`, { duration: .3 })
 
   return (
     <motion.div 
