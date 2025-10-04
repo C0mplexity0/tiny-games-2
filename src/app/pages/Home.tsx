@@ -84,7 +84,7 @@ export default function AppHomePage() {
               <EmptyContent>
                 <div className="flex gap-2">
                   <Button>Import a game</Button>
-                  <Button variant="outline">Create a game</Button>
+                  <Button variant="secondary">Create a game</Button>
                 </div>
               </EmptyContent>
               <Button
