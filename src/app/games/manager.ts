@@ -19,7 +19,7 @@ export default class GamesManager {
     this.fetchGames()
   }
 
-  private getGamesPath() {
+  getGamesPath() {
     return this.rootDir + "/games"
   }
 

@@ -22,6 +22,12 @@
         { "path": "$APPDATA/**/*" }
       ],
       "deny": []
+    },
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        { "path": "$APPDATA/**/*" }
+      ]
     }
   ]
 }

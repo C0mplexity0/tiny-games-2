@@ -17,7 +17,7 @@ async function mkdirsForFile(path: string) {
   }
 }
 
-function applyPathPrefix(path: string) {
+export function applyPathPrefix(path: string) {
   return "tiny-games-data/" + path;
 }
 
