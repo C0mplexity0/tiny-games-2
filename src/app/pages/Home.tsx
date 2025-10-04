@@ -7,7 +7,8 @@ import { useState } from "react";
 import { gamesManager } from "../main";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
-import { appDataDir, sep } from "@tauri-apps/api/path";
+import { appDataDir } from "@tauri-apps/api/path";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function AppHomePage() {
   const [selectedGame] = useState<number | undefined>()
@@ -22,24 +23,38 @@ export default function AppHomePage() {
         <div className="flex flex-row p-2 pt-1 gap-1">
           <Subtitle>Games</Subtitle>
           <div className="flex-1" />
-          <Button
-            variant="secondary"
-            size="icon-sm"
-            onClick={() => {
-              gamesManager.fetchGames()
-            }}
-          >
-            <LucideRefreshCcw />
-          </Button>
-          <Button
-            variant="secondary"
-            size="icon-sm"
-            onClick={async () => {
-              await openPath(await appDataDir() + sep() + applyPathPrefix(gamesManager.getGamesPath()));
-            }}
-          >
-            <LucideFolder />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant="secondary"
+                size="icon-sm"
+                onClick={() => {
+                  gamesManager.fetchGames()
+                }}
+              >
+                <LucideRefreshCcw />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Refresh</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant="secondary"
+                size="icon-sm"
+                onClick={async () => {
+                  await openPath(await appDataDir() + "/" + applyPathPrefix(gamesManager.getGamesPath()));
+                }}
+              >
+                <LucideFolder />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Open folder</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div className="flex flex-col p-2 pt-0">
           <Button 

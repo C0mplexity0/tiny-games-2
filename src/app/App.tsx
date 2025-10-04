@@ -10,6 +10,7 @@ import { TinyGamesLogoWithText } from "@/components/ui/logo";
 import LoadingScreen from "@/components/ui/loading-screen";
 import { Toaster } from "sonner";
 import { init } from "./main";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const router = createBrowserRouter([
   {
@@ -69,27 +70,48 @@ export function App() {
         >
           <TinyGamesLogoWithText className="pointer-events-none w-28" />
         </div>
-        <WindowButton
-          onClick={() => {
-            window.minimize()
-          }}
-        >
-            <LucideMinus />
-        </WindowButton>
-        <WindowButton
-          onClick={() => {
-            window.toggleMaximize()
-          }}
-        >
-            {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
-        </WindowButton>
-        <WindowButton
-          onClick={() => {
-            window.close()
-          }}
-        >
-            <LucideX />
-        </WindowButton>
+        <Tooltip>
+          <TooltipTrigger>
+            <WindowButton
+              onClick={() => {
+                window.minimize()
+              }}
+            >
+                <LucideMinus />
+            </WindowButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Minimise window</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <WindowButton
+              onClick={() => {
+                window.toggleMaximize()
+              }}
+            >
+                {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
+            </WindowButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Toggle maximise</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger>
+            <WindowButton
+              onClick={() => {
+                window.close()
+              }}
+            >
+                <LucideX />
+            </WindowButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Close</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <RouterProvider router={router} />
       <Toaster position="bottom-right" />
