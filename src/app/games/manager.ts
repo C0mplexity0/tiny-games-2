@@ -1,6 +1,7 @@
 import { createDirIfDoesntExist, createFileIfDoesntExist, readDataDir, readDataFile } from "@/lib/files"
 import Game from "./game"
 import { toast } from "@/components/ui/sonner"
+import { sep } from "@tauri-apps/api/path"
 
 export interface GameConfig {
   displayName: string
@@ -15,17 +16,17 @@ export default class GamesManager {
   }
 
   async load() {
-    this.makeFiles()
-    this.fetchGames()
+    await this.makeFiles()
+    await this.fetchGames()
   }
 
   getGamesPath() {
-    return this.rootDir + "/games"
+    return this.rootDir + sep() + "games"
   }
 
   private async makeFiles() {
     const gamesPath = this.getGamesPath()
-    const historyFile = this.rootDir + "/history.json"
+    const historyFile = this.rootDir + sep() + "history.json"
 
     await createDirIfDoesntExist(gamesPath)
     await createFileIfDoesntExist(historyFile, JSON.stringify([]))
@@ -57,7 +58,7 @@ export default class GamesManager {
       if (!entries[i].isDirectory)
         continue
 
-      const config = await readDataFile(gamesPath + "/" + entries[i].name + "/game.json")
+      const config = await readDataFile(gamesPath + sep() + entries[i].name + sep() + "game.json")
       if (!config)
         return
 

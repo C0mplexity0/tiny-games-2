@@ -1,12 +1,26 @@
+import { appDataDir, sep } from "@tauri-apps/api/path";
 import { exists, BaseDirectory, create, mkdir, readDir, readTextFile } from "@tauri-apps/plugin-fs";
 
+async function makeAppDataDirIfNeeded() {
+  const appDataDirPath = await appDataDir();
+  const appDataDirExists = await exists(appDataDirPath, { baseDir: BaseDirectory.AppData });
+  if (appDataDirExists)
+    return
+
+  await mkdir(await appDataDir())
+}
+
 async function mkdirsForFile(path: string) {
-  const sections = path.replace("\\", "/").split("/")
+  await makeAppDataDirIfNeeded()
+
+  const sections = path.replace(/\\/g, "/").split("/")
+  console.log(path.replace(/\\/g, "/"))
+  console.log(sections)
 
   for (let i=0;i<sections.length-1;i++) {
     let currentPath = "";
     for (let j=0;j<=i;j++) {
-      currentPath += sections[j] + "/";
+      currentPath += sections[j] + sep();
     }
 
     const dirExists = await exists(currentPath, { baseDir: BaseDirectory.AppData });
@@ -18,7 +32,7 @@ async function mkdirsForFile(path: string) {
 }
 
 export function applyPathPrefix(path: string) {
-  return "tiny-games-data/" + path;
+  return "tiny-games-data" + sep() + path;
 }
 
 export async function createFileIfDoesntExist(path: string, defaultContent: string) {

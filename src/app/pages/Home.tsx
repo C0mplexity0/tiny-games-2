@@ -7,7 +7,7 @@ import { useState } from "react";
 import { gamesManager } from "../main";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
-import { appDataDir } from "@tauri-apps/api/path";
+import { appDataDir, sep } from "@tauri-apps/api/path";
 
 export default function AppHomePage() {
   const [selectedGame] = useState<number | undefined>()
@@ -35,7 +35,7 @@ export default function AppHomePage() {
             variant="secondary"
             size="icon-sm"
             onClick={async () => {
-              await openPath(await appDataDir() + "/" + applyPathPrefix(gamesManager.getGamesPath()));
+              await openPath(await appDataDir() + sep() + applyPathPrefix(gamesManager.getGamesPath()));
             }}
           >
             <LucideFolder />
