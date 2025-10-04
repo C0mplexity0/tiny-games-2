@@ -39,5 +39,10 @@
       "icons/icon.ico"
     ],
     "resources": ["../src/web/dist/**/*"]
-  }
+  },
+  "plugins": {
+    "fs": {
+      "requireLiteralLeadingDot": false
+    }
+  } 
 }
