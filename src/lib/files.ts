@@ -14,8 +14,6 @@ async function mkdirsForFile(path: string) {
   await makeAppDataDirIfNeeded()
 
   const sections = path.replace(/\\/g, "/").split("/")
-  console.log(path.replace(/\\/g, "/"))
-  console.log(sections)
 
   for (let i=0;i<sections.length-1;i++) {
     let currentPath = "";
