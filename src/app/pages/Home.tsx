@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Subtitle from "@/components/ui/text";
-import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus } from "lucide-react";
+import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus, LucideRefreshCcw } from "lucide-react";
 import { useState } from "react";
 
 export default function AppHomePage() {
@@ -16,13 +16,13 @@ export default function AppHomePage() {
         className="min-w-70"
       >
         <div className="flex flex-row p-2 pt-1 gap-1">
-          <Subtitle>Installed</Subtitle>
+          <Subtitle>Games</Subtitle>
           <div className="flex-1" />
           <Button
             variant="secondary"
             size="icon-sm"
           >
-            <LucidePlus className="size-4.5" />
+            <LucideRefreshCcw />
           </Button>
           <Button
             variant="secondary"
@@ -38,7 +38,7 @@ export default function AppHomePage() {
             size="sm"
           >
             <LucidePlus />
-            <span>Add more content</span>
+            <span>Add more games</span>
           </Button>
         </div>
       </ResizablePanel>
