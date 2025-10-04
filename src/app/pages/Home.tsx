@@ -9,6 +9,7 @@ import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
 import { appDataDir } from "@tauri-apps/api/path";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import ExternalLink from "@/components/ui/link";
 
 export default function AppHomePage() {
   const [selectedGame] = useState<number | undefined>()
@@ -24,7 +25,7 @@ export default function AppHomePage() {
           <Subtitle>Games</Subtitle>
           <div className="flex-1" />
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <Button
                 variant="secondary"
                 size="icon-sm"
@@ -40,7 +41,7 @@ export default function AppHomePage() {
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <Button
                 variant="secondary"
                 size="icon-sm"
@@ -87,16 +88,12 @@ export default function AppHomePage() {
                   <Button variant="secondary">Create a game</Button>
                 </div>
               </EmptyContent>
-              <Button
-                variant="link"
-                asChild
-                className="text-muted-foreground"
-                size="sm"
+              <ExternalLink
+                to="https://tiny-games.c0mplexity.com"
               >
-                <a href="#">
-                  Learn more <ArrowUpRightIcon />
-                </a>
-              </Button>
+                Learn more
+                <ArrowUpRightIcon />
+              </ExternalLink>
             </Empty>
           </div>
         }

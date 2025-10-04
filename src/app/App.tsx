@@ -71,7 +71,7 @@ export function App() {
           <TinyGamesLogoWithText className="pointer-events-none w-28" />
         </div>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <WindowButton
               onClick={() => {
                 window.minimize()
@@ -85,7 +85,7 @@ export function App() {
           </TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <WindowButton
               onClick={() => {
                 window.toggleMaximize()
@@ -99,7 +99,7 @@ export function App() {
           </TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <WindowButton
               onClick={() => {
                 window.close()
