@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Subtitle from "@/components/ui/text";
-import { LucideFolder, LucidePlus } from "lucide-react";
+import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus } from "lucide-react";
 import { useState } from "react";
 
 export default function AppHomePage() {
@@ -44,11 +45,35 @@ export default function AppHomePage() {
       <ResizableHandle className="border-none bg-transparent" />
       <ResizablePanel minSize={30} defaultSize={75} className="rounded-tl-lg border-t border-l size-full bg-background">
         {selectedGame ? null : 
-        <div className="size-full flex justify-center items-center">
-          <div>
-            <p>No games :(</p>
+          <div className="flex justify-center items-center size-full">
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <LucideGamepad />
+                </EmptyMedia>
+                <EmptyTitle>No Games Yet</EmptyTitle>
+                <EmptyDescription>
+                  You haven&apos;t added any games yet. Get started by importing or creating your first game.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+                <div className="flex gap-2">
+                  <Button>Import a game</Button>
+                  <Button variant="outline">Create a game</Button>
+                </div>
+              </EmptyContent>
+              <Button
+                variant="link"
+                asChild
+                className="text-muted-foreground"
+                size="sm"
+              >
+                <a href="#">
+                  Learn More <ArrowUpRightIcon />
+                </a>
+              </Button>
+            </Empty>
           </div>
-        </div>
         }
       </ResizablePanel>
     </ResizablePanelGroup>
