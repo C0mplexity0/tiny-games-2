@@ -7,7 +7,7 @@ import { useState } from "react";
 import { gamesManager } from "../main";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
-import { appDataDir } from "@tauri-apps/api/path";
+import { appDataDir, sep } from "@tauri-apps/api/path";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import ExternalLink from "@/components/ui/link";
 
@@ -46,7 +46,9 @@ export default function AppHomePage() {
                 variant="secondary"
                 size="icon-sm"
                 onClick={async () => {
-                  await openPath(await appDataDir() + "/" + applyPathPrefix(gamesManager.getGamesPath()));
+                  const path = await appDataDir() + sep() + applyPathPrefix(gamesManager.getGamesPath());
+                  console.log(path)
+                  await openPath(path);
                 }}
               >
                 <LucideFolder />
