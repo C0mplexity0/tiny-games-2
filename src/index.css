@@ -46,15 +46,15 @@
   --background-secondary: #151315;
   --foreground: #E4E4E4;
   --card: var(--background-secondary);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --card-foreground: var(--foreground);
+  --popover: var(--background-secondary);
+  --popover-foreground: var(--foreground);
   --primary: #DC86E8;
   --primary-foreground: #0E0B0F;
   --secondary: #222022;
-  --secondary-foreground: #B8B8B8;
+  --secondary-foreground: #CFCFCF;
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted-foreground: #C0C0C0;
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
@@ -99,4 +99,3 @@ html, body, #root {
   width: 100%;
   height: 100%;
 }
-

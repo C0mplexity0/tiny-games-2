@@ -1,0 +1,86 @@
+import { createDirIfDoesntExist, createFileIfDoesntExist, readDataDir, readDataFile } from "@/lib/files"
+import Game from "./game"
+import { toast } from "@/components/ui/sonner"
+
+export interface GameConfig {
+  displayName: string
+}
+
+export default class GamesManager {
+
+  private games: Game[]
+
+  constructor (private rootDir: string) {
+    this.makeFiles()
+
+    this.games = []
+    this.fetchGames()
+  }
+
+  private getGamesPath() {
+    return this.rootDir + "/games"
+  }
+
+  private async makeFiles() {
+    const gamesPath = this.getGamesPath()
+    const historyFile = this.rootDir + "/history.json"
+
+    await createDirIfDoesntExist(gamesPath)
+    await createFileIfDoesntExist(historyFile, JSON.stringify([]))
+  }
+
+  private jsonIsGameConfig(value: GameConfig): value is GameConfig {
+    if (value.displayName)
+      return true
+    return false
+  }
+
+  private showFetchingGameFailedMessage(gameName: string, description: string) {
+    toast({
+      title: "Failed to load game",
+      description: `${gameName}: ${description}`
+    })
+  }
+
+  async fetchGames() {
+    this.games = []
+    const gamesPath = this.getGamesPath()
+
+    const entries = await readDataDir(gamesPath)
+
+    if (!entries)
+      throw new Error("Couldn't read games folder (doesn't exist?)")
+
+    for (let i=0;i<entries.length;i++) {
+      if (!entries[i].isDirectory)
+        continue
+
+      const config = await readDataFile(gamesPath + "/" + entries[i].name + "/game.json")
+      if (!config)
+        return
+
+      let configJSON
+
+      try {
+        configJSON = JSON.parse(config)
+      } catch(err) {
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be invalid JSON.")
+        console.error("Game config appears to be invalid JSON: " + entries[i].name)
+      }
+
+      if (!configJSON)
+        continue
+      
+      if (this.jsonIsGameConfig(configJSON))
+        this.games.push(new Game(entries[i].name, configJSON))
+      else {
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be invalid.")
+        console.warn("Game config appears to be invalid: " + entries[i].name)
+      }
+    }
+  }
+
+  async getGames() {
+    return this.games
+  }
+}

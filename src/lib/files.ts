@@ -1,4 +1,4 @@
-import { exists, BaseDirectory, create, mkdir } from "@tauri-apps/plugin-fs";
+import { exists, BaseDirectory, create, mkdir, readDir, readTextFile } from "@tauri-apps/plugin-fs";
 
 async function mkdirsForFile(path: string) {
   const sections = path.replace("\\", "/").split("/")
@@ -22,12 +22,11 @@ function applyPathPrefix(path: string) {
 }
 
 export async function createFileIfDoesntExist(path: string, defaultContent: string) {
-  path = applyPathPrefix(path);
-
-  const fileExists = await exists(path, { baseDir: BaseDirectory.AppData });
-
+  const fileExists = await dataFileExists(path);
   if (fileExists)
     return
+
+  path = applyPathPrefix(path);
 
   await mkdirsForFile(path)
 
@@ -37,14 +36,43 @@ export async function createFileIfDoesntExist(path: string, defaultContent: stri
 }
 
 export async function createDirIfDoesntExist(path: string) {
-  path = applyPathPrefix(path);
-
-  const dirExists = await exists(path, { baseDir: BaseDirectory.AppData });
-
-  if (dirExists)
+  const fileExists = await dataFileExists(path);
+  if (fileExists)
     return
+
+  path = applyPathPrefix(path);
 
   await mkdirsForFile(path)
 
   await mkdir(path, { baseDir: BaseDirectory.AppData });
+}
+
+export async function dataFileExists(path: string) {
+  path = applyPathPrefix(path);
+
+  const fileExists = await exists(path, { baseDir: BaseDirectory.AppData });
+  return fileExists
+}
+
+export async function readDataFile(path: string) {
+  const fileExists = await dataFileExists(path);
+  if (!fileExists)
+    return
+
+  path = applyPathPrefix(path);
+
+  const content = await readTextFile(path, { baseDir: BaseDirectory.AppData })
+
+  return content
+}
+
+export async function readDataDir(path: string) {
+  const fileExists = await dataFileExists(path);
+  if (!fileExists)
+    return
+
+  path = applyPathPrefix(path);
+
+  const entries = await readDir(path, { baseDir: BaseDirectory.AppData });
+  return entries
 }

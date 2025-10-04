@@ -8,6 +8,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TinyGamesLogoWithText } from "@/components/ui/logo";
 import LoadingScreen from "@/components/ui/loading-screen";
+import { Toaster } from "sonner";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,7 @@ export function App() {
         </WindowButton>
       </div>
       <RouterProvider router={router} />
+      <Toaster position="bottom-right" />
     </main>
   )
 }
