@@ -1,9 +1,15 @@
 use tauri::path::BaseDirectory;
 use tauri::Manager;
 
+#[tauri::command]
+fn get_ip_address() -> String {
+  local_ip_address::local_ip().unwrap().to_string()
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![get_ip_address])
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .setup(|app| {

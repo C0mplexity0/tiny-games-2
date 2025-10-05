@@ -28,6 +28,7 @@
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
     "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-resizable-panels": "^3.0.6",

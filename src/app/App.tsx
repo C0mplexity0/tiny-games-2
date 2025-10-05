@@ -11,8 +11,8 @@ import LoadingScreen from "@/components/ui/loading-screen";
 import { Toaster } from "sonner";
 import { init } from "./main.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
-import { DialogDescription } from "@radix-ui/react-dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog.tsx";
+import DeviceConnectDialogueContent from "@/components/ui/device-connect-dialogue.tsx";
 
 const router = createBrowserRouter([
   {
@@ -92,12 +92,7 @@ export function App() {
               <TooltipContent>
                 <p>Connect device</p>
               </TooltipContent>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Connect a device</DialogTitle>
-                  <DialogDescription>Scan the QR code below to add a device.</DialogDescription>
-                </DialogHeader>
-              </DialogContent>
+              <DeviceConnectDialogueContent />
             </Dialog>
           </Tooltip>
         </div>
