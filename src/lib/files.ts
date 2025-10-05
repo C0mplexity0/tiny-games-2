@@ -1,5 +1,13 @@
 import { appDataDir, sep } from "@tauri-apps/api/path";
-import { exists, BaseDirectory, create, mkdir, readDir, readTextFile } from "@tauri-apps/plugin-fs";
+import { exists, BaseDirectory, create, mkdir, readDir, readTextFile, readFile } from "@tauri-apps/plugin-fs";
+
+let dataDir = "";
+
+async function initDataDir() {
+  dataDir = await appDataDir();
+}
+
+initDataDir();
 
 async function makeAppDataDirIfNeeded() {
   const appDataDirPath = await appDataDir();
@@ -87,4 +95,41 @@ export async function readDataDir(path: string) {
 
   const entries = await readDir(path, { baseDir: BaseDirectory.AppData });
   return entries;
+}
+
+export function getAppDataDir() {
+  return dataDir;
+}
+
+function arrayBufferToBase64(buffer: Uint8Array<ArrayBuffer>, callback: (val: string) => void) {
+  const blob = new Blob([buffer], {
+    type: "application/octet-binary",
+  });
+  const reader = new FileReader();
+  reader.onload = function (evt) {
+    const dataurl = evt.target?.result;
+    if (typeof dataurl !== "string")
+      return;
+
+    callback(dataurl?.substr(dataurl.indexOf(",") + 1));
+  };
+  reader.readAsDataURL(blob);
+}
+
+export async function fetchImg(path: string) {
+  const fileExists = await dataFileExists(path);
+  console.log(path);
+  console.log(fileExists);
+  if (!fileExists)
+    return;
+
+  path = applyPathPrefix(path);
+
+  const img = await readFile(path, { baseDir: BaseDirectory.AppData });
+  console.log(img);
+  return new Promise<string>((resolve) => {
+    arrayBufferToBase64(img, (val) => {
+      resolve("data:image/png;base64," + val);
+    });
+  });
 }

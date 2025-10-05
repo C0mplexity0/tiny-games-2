@@ -3,7 +3,7 @@ import { GameConfig } from "./manager";
 export default class Game {
 
   constructor (private name: string, private config: GameConfig) {
-
+    
   }
 
   getName() {

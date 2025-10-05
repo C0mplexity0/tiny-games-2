@@ -5,7 +5,8 @@ import { sep } from "@tauri-apps/api/path";
 import { Event, EventHandler, Listener } from "@/util/event/event";
 
 export interface GameConfig {
-  displayName: string
+  displayName: string,
+  icon: string
 }
 
 export class GamesManagerFetchedGamesEvent extends Event {
@@ -50,7 +51,7 @@ export default class GamesManager {
   }
 
   private jsonIsGameConfig(value: GameConfig): value is GameConfig {
-    if (value.displayName && value.displayName.length <= 16)
+    if (value.displayName && value.icon && value.displayName.length <= 20)
       return true;
     return false;
   }

@@ -7,11 +7,36 @@ import { useEffect, useState } from "react";
 import { gamesManager } from "../main.ts";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
-import { appDataDir, sep } from "@tauri-apps/api/path";
+import { appDataDir, join, sep } from "@tauri-apps/api/path";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import ExternalLink from "@/components/ui/link";
 import { GamesManagerFetchedGamesEvent } from "../games/manager.ts";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
+import ImgFile from "@/components/ui/img-file.tsx";
+import Game from "../games/game.ts";
+
+function GameButton({ game, selected, onClick }: { game: Game, selected: boolean, onClick: () => void }) {
+  const [path, setPath] = useState<string | undefined>();
+
+  useEffect(() => {
+    join(gamesManager.getGamesPath(), game.getName(), game.getConfig().icon).then((val) => {
+      setPath(val);
+    });
+  }, []);
+  
+  return (
+    <Button 
+      variant="secondary" 
+      className={`w-full flex flex-row p-1 gap-1 h-fit ${selected ? "bg-secondary border border-secondary" : "bg-transparent border"}`}
+      onClick={onClick}
+    >
+      <div className="bg-secondary size-7 rounded-sm border overflow-hidden">
+        <ImgFile src={path} />
+      </div>
+      <span className="flex-1">{game.getConfig().displayName}</span>
+    </Button>
+  );
+}
 
 export default function AppHomePage() {
   const [selectedGame, setSelectedGame] = useState(0);
@@ -39,7 +64,7 @@ export default function AppHomePage() {
       <ResizablePanel 
         minSize={20}
         defaultSize={25}
-        className="min-w-70 flex flex-col h-full"
+        className="min-w-82 flex flex-col h-full"
       >
         <div className="flex flex-row p-2 pt-1 gap-1">
           <Subtitle>Games</Subtitle>
@@ -81,16 +106,14 @@ export default function AppHomePage() {
         <ScrollArea className="p-2 pt-0  flex-1 overflow-hidden">
           <div className="gap-2 flex flex-col">
             {games.map((val, i) => (
-              <Button 
-                key={i} 
-                variant="secondary" 
-                className={`w-full ${selectedGame === i ? "bg-secondary border-none" : "bg-transparent border"}`}
+              <GameButton
+                key={i}
+                game={val}
                 onClick={() => {
                   setSelectedGame(i);
                 }}
-              >
-                {val.getConfig().displayName}
-              </Button>
+                selected={selectedGame === i}
+              />
             ))}
             <Button 
               variant="secondary"
@@ -105,7 +128,7 @@ export default function AppHomePage() {
         </ScrollArea>
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
-      <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-lg border-t border-l size-full bg-background">
+      <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-xl border-t border-l size-full bg-background">
         {games[selectedGame] ? undefined : 
           <div className="flex justify-center items-center size-full">
             <Empty>

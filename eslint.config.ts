@@ -13,10 +13,17 @@ export default defineConfig([
     extends: ["js/recommended"], 
     languageOptions: { globals: globals.browser },
     rules: {
-      "@stylistic/semi": ["error", "always"]
+      "@stylistic/semi": ["error", "always"],
+      "react/prop-types": [0],
     }
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat['jsx-runtime'],
+  { 
+    files: ["src/**/*.{ts,mts,cts,tsx}"],
+    rules: {
+      "react/prop-types": [0],
+    }
+  },
 ]);
