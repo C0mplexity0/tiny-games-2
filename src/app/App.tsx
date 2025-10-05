@@ -23,7 +23,7 @@ function WindowButton({ children, onClick, tooltip }: { children: ReactNode, onC
   return (
     <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"secondary"} size={"icon"} className="size-7" onClick={onClick}>
+          <Button variant={"secondary"} size={"icon"} className="size-8" onClick={onClick}>
             {children}
           </Button>
         </TooltipTrigger>
@@ -67,9 +67,9 @@ export function App() {
   return (
     <main className="size-full flex flex-col">
       <LoadingScreen loaded={loaded} />
-      <div className="bg-card h-9 p-1 w-full flex flex-row gap-1">
+      <div className="bg-card h-11 p-1 w-full flex flex-row gap-1">
         <div 
-          className="bg-card h-7 w-full flex-1 flex items-center p-1"
+          className="bg-card h-7 w-full flex-1 flex items-center p-1.5"
           style={{
             userSelect: "none"
           }}
