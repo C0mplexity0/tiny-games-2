@@ -19,7 +19,12 @@ export default function AppHomePage() {
   
   useEffect(() => {
     const listener = (event: GamesManagerFetchedGamesEvent) => {
-      setGames(event.getGames())
+      const games = event.getGames()
+      setGames(games)
+
+      if (!games[selectedGame]) {
+        setSelectedGame(0)
+      }
     }
 
     gamesManager.onFetchedGames(listener)
