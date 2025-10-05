@@ -14,7 +14,7 @@ import { GamesManagerFetchedGamesEvent } from "../games/manager.ts";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
 
 export default function AppHomePage() {
-  const [selectedGame] = useState(0)
+  const [selectedGame, setSelectedGame] = useState(0)
   const [games, setGames] = useState(gamesManager.getGames())
   
   useEffect(() => {
@@ -77,7 +77,14 @@ export default function AppHomePage() {
         <ScrollArea className="p-2 pt-0  flex-1 overflow-hidden">
           <div className="gap-2 flex flex-col">
             {games.map((val, i) => (
-              <Button key={i} variant="secondary" className="w-full">
+              <Button 
+                key={i} 
+                variant="secondary" 
+                className={`w-full ${selectedGame === i ? "bg-secondary border-none" : "bg-transparent border"}`}
+                onClick={() => {
+                  setSelectedGame(i)
+                }}
+              >
                 {val.getConfig().displayName}
               </Button>
             ))}
