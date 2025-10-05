@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import { init } from "./main.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,7 @@ export function App() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Connect a device</DialogTitle>
+                  <DialogDescription>Scan the QR code below to add a device.</DialogDescription>
                 </DialogHeader>
               </DialogContent>
             </Dialog>
