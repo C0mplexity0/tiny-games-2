@@ -50,7 +50,7 @@ export default class GamesManager {
   }
 
   private jsonIsGameConfig(value: GameConfig): value is GameConfig {
-    if (value.displayName)
+    if (value.displayName && value.displayName.length <= 20)
       return true;
     return false;
   }
@@ -95,8 +95,8 @@ export default class GamesManager {
       if (this.jsonIsGameConfig(configJSON))
         this.games.push(new Game(entries[i].name, configJSON));
       else {
-        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be missing certain fields.");
-        console.warn("Game config appears to be missing certain fields: " + entries[i].name);
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config is invalid.");
+        console.warn("Game config is invalid: " + entries[i].name);
       }
     }
   }
