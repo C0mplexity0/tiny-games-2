@@ -3,23 +3,38 @@ import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyCont
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import Subtitle from "@/components/ui/text";
 import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus, LucideRefreshCcw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gamesManager } from "../main.ts";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { applyPathPrefix } from "@/lib/files";
 import { appDataDir, sep } from "@tauri-apps/api/path";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import ExternalLink from "@/components/ui/link";
+import { GamesManagerFetchedGamesEvent } from "../games/manager.ts";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
 
 export default function AppHomePage() {
   const [selectedGame] = useState<number | undefined>()
+  const [games, setGames] = useState(gamesManager.getGames())
+  
+  useEffect(() => {
+    const listener = (event: GamesManagerFetchedGamesEvent) => {
+      setGames(event.getGames())
+    }
+
+    gamesManager.onFetchedGames(listener)
+
+    return () => {
+      gamesManager.offFetchedGames(listener)
+    }
+  }, [games])
 
   return (
     <ResizablePanelGroup direction="horizontal" className="size-full bg-card flex flex-row">
       <ResizablePanel 
         minSize={20}
         defaultSize={25}
-        className="min-w-70"
+        className="min-w-70 flex flex-col h-full"
       >
         <div className="flex flex-row p-2 pt-1 gap-1">
           <Subtitle>Games</Subtitle>
@@ -59,16 +74,24 @@ export default function AppHomePage() {
             </TooltipContent>
           </Tooltip>
         </div>
-        <div className="flex flex-col p-2 pt-0">
-          <Button 
-            variant="secondary"
-            className="flex flex-row h-7"
-            size="sm"
-          >
-            <LucidePlus />
-            <span>Add more games</span>
-          </Button>
-        </div>
+        <ScrollArea className="p-2 pt-0  flex-1 overflow-hidden">
+          <div className="gap-2 flex flex-col">
+            {games.map((val, i) => (
+              <Button key={i} variant="secondary" className="w-full">
+                {val.getConfig().displayName}
+              </Button>
+            ))}
+            <Button 
+              variant="secondary"
+              className="flex flex-row h-7 w-full"
+              size="sm"
+            >
+              <LucidePlus />
+              <span>Add more games</span>
+            </Button>
+          </div>
+          <ScrollBar orientation="vertical" />
+        </ScrollArea>
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
       <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-lg border-t border-l size-full bg-background">

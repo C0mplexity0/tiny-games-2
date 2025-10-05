@@ -2,17 +2,32 @@ import { createDirIfDoesntExist, createFileIfDoesntExist, readDataDir, readDataF
 import Game from "./game"
 import { toast } from "@/components/ui/sonner"
 import { sep } from "@tauri-apps/api/path"
+import { Event, EventHandler, Listener } from "@/util/event/event"
 
 export interface GameConfig {
   displayName: string
 }
 
+export class GamesManagerFetchedGamesEvent extends Event {
+
+  constructor(private games: Game[]) {
+    super()
+  }
+
+  getGames() {
+    return this.games
+  }
+}
+
 export default class GamesManager {
 
   private games: Game[]
+  private onFetchedGamesEvent: EventHandler<GamesManagerFetchedGamesEvent>
 
   constructor (private rootDir: string) {
     this.games = []
+
+    this.onFetchedGamesEvent = new EventHandler()
   }
 
   async load() {
@@ -83,9 +98,20 @@ export default class GamesManager {
         console.warn("Game config appears to be missing certain fields: " + entries[i].name)
       }
     }
+
+    const event = new GamesManagerFetchedGamesEvent(this.getGames())
+    this.onFetchedGamesEvent.fire(event)
   }
 
-  async getGames() {
+  onFetchedGames(callback: Listener<GamesManagerFetchedGamesEvent>) {
+    this.onFetchedGamesEvent.addListener(callback)
+  }
+
+  offFetchedGames(callback: Listener<GamesManagerFetchedGamesEvent>) {
+    this.onFetchedGamesEvent.addListener(callback)
+  }
+
+  getGames() {
     return this.games
   }
 }
