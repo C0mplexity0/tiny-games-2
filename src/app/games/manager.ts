@@ -50,7 +50,7 @@ export default class GamesManager {
   }
 
   private jsonIsGameConfig(value: GameConfig): value is GameConfig {
-    if (value.displayName && value.displayName.length <= 20)
+    if (value.displayName && value.displayName.length <= 16)
       return true;
     return false;
   }
