@@ -14,7 +14,7 @@ import { GamesManagerFetchedGamesEvent } from "../games/manager.ts";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
 
 export default function AppHomePage() {
-  const [selectedGame] = useState<number | undefined>()
+  const [selectedGame] = useState(0)
   const [games, setGames] = useState(gamesManager.getGames())
   
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function AppHomePage() {
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
       <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-lg border-t border-l size-full bg-background">
-        {selectedGame ? null : 
+        {games[selectedGame] ? undefined : 
           <div className="flex justify-center items-center size-full">
             <Empty>
               <EmptyHeader>
