@@ -6,14 +6,15 @@ Games console with no games console.
 
 ```bash
 pnpm install
-pnpm tauri:dev
+pnpm tauri dev
 ```
 
 ### Building
 
 ```bash
 pnpm install
-pnpm tauri:build
+pnpm tauri build
+pnpm linuxbuild
 ```
 
 ## FAQ
