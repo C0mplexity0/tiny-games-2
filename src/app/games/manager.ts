@@ -1,8 +1,8 @@
-import { createDirIfDoesntExist, createFileIfDoesntExist, readDataDir, readDataFile } from "@/lib/files"
-import Game from "./game"
-import { toast } from "@/components/ui/sonner"
-import { sep } from "@tauri-apps/api/path"
-import { Event, EventHandler, Listener } from "@/util/event/event"
+import { createDirIfDoesntExist, createFileIfDoesntExist, readDataDir, readDataFile } from "@/lib/files";
+import Game from "./game";
+import { toast } from "@/components/ui/sonner";
+import { sep } from "@tauri-apps/api/path";
+import { Event, EventHandler, Listener } from "@/util/event/event";
 
 export interface GameConfig {
   displayName: string
@@ -11,129 +11,129 @@ export interface GameConfig {
 export class GamesManagerFetchedGamesEvent extends Event {
 
   constructor(private games: Game[]) {
-    super()
+    super();
   }
 
   getGames() {
-    return this.games
+    return this.games;
   }
 }
 
 export default class GamesManager {
 
-  private games: Game[]
-  private fetchingGames: boolean
-  private onFetchedGamesEvent: EventHandler<GamesManagerFetchedGamesEvent>
+  private games: Game[];
+  private fetchingGames: boolean;
+  private onFetchedGamesEvent: EventHandler<GamesManagerFetchedGamesEvent>;
 
   constructor (private rootDir: string) {
-    this.games = []
-    this.fetchingGames = false
+    this.games = [];
+    this.fetchingGames = false;
 
-    this.onFetchedGamesEvent = new EventHandler()
+    this.onFetchedGamesEvent = new EventHandler();
   }
 
   async load() {
-    await this.makeFiles()
-    await this.fetchGames()
+    await this.makeFiles();
+    await this.fetchGames();
   }
 
   getGamesPath() {
-    return this.rootDir + sep() + "games"
+    return this.rootDir + sep() + "games";
   }
 
   private async makeFiles() {
-    const gamesPath = this.getGamesPath()
-    const historyFile = this.rootDir + sep() + "history.json"
+    const gamesPath = this.getGamesPath();
+    const historyFile = this.rootDir + sep() + "history.json";
 
-    await createDirIfDoesntExist(gamesPath)
-    await createFileIfDoesntExist(historyFile, JSON.stringify([]))
+    await createDirIfDoesntExist(gamesPath);
+    await createFileIfDoesntExist(historyFile, JSON.stringify([]));
   }
 
   private jsonIsGameConfig(value: GameConfig): value is GameConfig {
     if (value.displayName)
-      return true
-    return false
+      return true;
+    return false;
   }
 
   private showFetchingGameFailedMessage(gameName: string, description: string) {
     toast({
       title: "Failed to load game",
       description: `${gameName}: ${description}`
-    })
+    });
   }
   
   private async fetchGameFiles() {
-    const gamesPath = this.getGamesPath()
+    const gamesPath = this.getGamesPath();
 
-    const entries = await readDataDir(gamesPath)
+    const entries = await readDataDir(gamesPath);
 
     if (!entries)
-      throw new Error("Couldn't read games folder (doesn't exist?)")
+      throw new Error("Couldn't read games folder (doesn't exist?)");
 
     for (let i=0;i<entries.length;i++) {
       if (!entries[i].isDirectory)
-        continue
+        continue;
 
-      const config = await readDataFile(gamesPath + sep() + entries[i].name + sep() + "game.json")
+      const config = await readDataFile(gamesPath + sep() + entries[i].name + sep() + "game.json");
       if (config === undefined) {
-        this.showFetchingGameFailedMessage(entries[i].name, "Missing game config (game.json).")
-        continue
+        this.showFetchingGameFailedMessage(entries[i].name, "Missing game config (game.json).");
+        continue;
       }
 
-      let configJSON
+      let configJSON;
 
       try {
-        configJSON = JSON.parse(config)
+        configJSON = JSON.parse(config);
       } catch(err) {
-        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be invalid JSON.")
-        console.error("Game config appears to be invalid JSON: " + entries[i].name)
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be invalid JSON.");
+        console.error(err);
       }
 
       if (!configJSON)
-        continue
+        continue;
       
       if (this.jsonIsGameConfig(configJSON))
-        this.games.push(new Game(entries[i].name, configJSON))
+        this.games.push(new Game(entries[i].name, configJSON));
       else {
-        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be missing certain fields.")
-        console.warn("Game config appears to be missing certain fields: " + entries[i].name)
+        this.showFetchingGameFailedMessage(entries[i].name, "Game config appears to be missing certain fields.");
+        console.warn("Game config appears to be missing certain fields: " + entries[i].name);
       }
     }
   }
 
   async fetchGames() {
     if (this.fetchingGames)
-      return
+      return;
 
-    this.fetchingGames = true
+    this.fetchingGames = true;
 
-    this.games = []
+    this.games = [];
     
     try {
-      await this.fetchGameFiles()
+      await this.fetchGameFiles();
     } catch(err) {
       console.error(err);
       toast({
         title: "Couldn't fetch games",
         description: `An unknown error occurred.`
-      })
+      });
     }
 
-    this.fetchingGames = false
+    this.fetchingGames = false;
 
-    const event = new GamesManagerFetchedGamesEvent(this.getGames())
-    this.onFetchedGamesEvent.fire(event)
+    const event = new GamesManagerFetchedGamesEvent(this.getGames());
+    this.onFetchedGamesEvent.fire(event);
   }
 
   onFetchedGames(callback: Listener<GamesManagerFetchedGamesEvent>) {
-    this.onFetchedGamesEvent.addListener(callback)
+    this.onFetchedGamesEvent.addListener(callback);
   }
 
   offFetchedGames(callback: Listener<GamesManagerFetchedGamesEvent>) {
-    this.onFetchedGamesEvent.removeListener(callback)
+    this.onFetchedGamesEvent.removeListener(callback);
   }
 
   getGames() {
-    return this.games
+    return this.games;
   }
 }

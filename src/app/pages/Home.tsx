@@ -14,25 +14,25 @@ import { GamesManagerFetchedGamesEvent } from "../games/manager.ts";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
 
 export default function AppHomePage() {
-  const [selectedGame, setSelectedGame] = useState(0)
-  const [games, setGames] = useState(gamesManager.getGames())
+  const [selectedGame, setSelectedGame] = useState(0);
+  const [games, setGames] = useState(gamesManager.getGames());
   
   useEffect(() => {
     const listener = (event: GamesManagerFetchedGamesEvent) => {
-      const games = event.getGames()
-      setGames(games)
+      const games = event.getGames();
+      setGames(games);
       
       if (games[selectedGame] === undefined) {
-        setSelectedGame(0)
+        setSelectedGame(0);
       }
-    }
+    };
 
-    gamesManager.onFetchedGames(listener)
+    gamesManager.onFetchedGames(listener);
 
     return () => {
-      gamesManager.offFetchedGames(listener)
-    }
-  }, [games])
+      gamesManager.offFetchedGames(listener);
+    };
+  }, [games]);
 
   return (
     <ResizablePanelGroup direction="horizontal" className="size-full bg-card flex flex-row">
@@ -50,7 +50,7 @@ export default function AppHomePage() {
                 variant="secondary"
                 size="icon-sm"
                 onClick={() => {
-                  gamesManager.fetchGames()
+                  gamesManager.fetchGames();
                 }}
               >
                 <LucideRefreshCcw />
@@ -86,7 +86,7 @@ export default function AppHomePage() {
                 variant="secondary" 
                 className={`w-full ${selectedGame === i ? "bg-secondary border-none" : "bg-transparent border"}`}
                 onClick={() => {
-                  setSelectedGame(i)
+                  setSelectedGame(i);
                 }}
               >
                 {val.getConfig().displayName}
@@ -135,5 +135,5 @@ export default function AppHomePage() {
         }
       </ResizablePanel>
     </ResizablePanelGroup>
-  )
+  );
 }

@@ -5,15 +5,15 @@ async function makeAppDataDirIfNeeded() {
   const appDataDirPath = await appDataDir();
   const appDataDirExists = await exists(appDataDirPath, { baseDir: BaseDirectory.AppData });
   if (appDataDirExists)
-    return
+    return;
 
-  await mkdir(await appDataDir())
+  await mkdir(await appDataDir());
 }
 
 async function mkdirsForFile(path: string) {
-  await makeAppDataDirIfNeeded()
+  await makeAppDataDirIfNeeded();
 
-  const sections = path.replace(/\\/g, "/").split("/")
+  const sections = path.replace(/\\/g, "/").split("/");
 
   for (let i=0;i<sections.length-1;i++) {
     let currentPath = "";
@@ -23,7 +23,7 @@ async function mkdirsForFile(path: string) {
 
     const dirExists = await exists(currentPath, { baseDir: BaseDirectory.AppData });
     if (dirExists)
-      continue
+      continue;
 
     await mkdir(currentPath, { baseDir: BaseDirectory.AppData });
   }
@@ -36,11 +36,11 @@ export function applyPathPrefix(path: string) {
 export async function createFileIfDoesntExist(path: string, defaultContent: string) {
   const fileExists = await dataFileExists(path);
   if (fileExists)
-    return
+    return;
 
   path = applyPathPrefix(path);
 
-  await mkdirsForFile(path)
+  await mkdirsForFile(path);
 
   const file = await create(path, { baseDir: BaseDirectory.AppData });
   await file.write(new TextEncoder().encode(defaultContent));
@@ -50,11 +50,11 @@ export async function createFileIfDoesntExist(path: string, defaultContent: stri
 export async function createDirIfDoesntExist(path: string) {
   const fileExists = await dataFileExists(path);
   if (fileExists)
-    return
+    return;
 
   path = applyPathPrefix(path);
 
-  await mkdirsForFile(path)
+  await mkdirsForFile(path);
 
   await mkdir(path, { baseDir: BaseDirectory.AppData });
 }
@@ -63,28 +63,28 @@ export async function dataFileExists(path: string) {
   path = applyPathPrefix(path);
 
   const fileExists = await exists(path, { baseDir: BaseDirectory.AppData });
-  return fileExists
+  return fileExists;
 }
 
 export async function readDataFile(path: string) {
   const fileExists = await dataFileExists(path);
   if (!fileExists)
-    return
+    return;
 
   path = applyPathPrefix(path);
 
-  const content = await readTextFile(path, { baseDir: BaseDirectory.AppData })
+  const content = await readTextFile(path, { baseDir: BaseDirectory.AppData });
 
-  return content
+  return content;
 }
 
 export async function readDataDir(path: string) {
   const fileExists = await dataFileExists(path);
   if (!fileExists)
-    return
+    return;
 
   path = applyPathPrefix(path);
 
   const entries = await readDir(path, { baseDir: BaseDirectory.AppData });
-  return entries
+  return entries;
 }

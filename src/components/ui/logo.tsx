@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export function TinyGamesLogoWithText({
   className
@@ -23,5 +23,5 @@ export function TinyGamesLogoWithText({
       </svg>
 
     </div>
-  )
+  );
 }

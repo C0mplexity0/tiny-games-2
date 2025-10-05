@@ -14,10 +14,10 @@ export default function ExternalLink(
       size="sm"
     >
       <a href="#" onClick={() => {
-        open(to)
+        open(to);
       }}>
         {children}
       </a>
     </Button>
-  )
+  );
 }

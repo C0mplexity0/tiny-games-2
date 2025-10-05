@@ -3,5 +3,5 @@ export default function WebHomePage() {
     <div>
       <p>web</p>
     </div>
-  )
+  );
 }

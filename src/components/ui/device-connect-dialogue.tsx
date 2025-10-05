@@ -6,16 +6,16 @@ import ExternalLink from "./link";
 import { ArrowUpRight } from "lucide-react";
 
 export default function DeviceConnectDialogueContent() {
-  const [ipAddr, setIpAddr] = useState<string | undefined>()
+  const [ipAddr, setIpAddr] = useState<string | undefined>();
 
   useEffect(() => {
     invoke("get_ip_address").then((val) => {
       if (typeof val === "string")
-        setIpAddr(val)
-    })
-  }, [])
+        setIpAddr(val);
+    });
+  }, []);
 
-  const link = `http://${ipAddr}:2420`
+  const link = `http://${ipAddr}:2420`;
 
   return (
     <DialogContent>
@@ -30,5 +30,5 @@ export default function DeviceConnectDialogueContent() {
       </div>
       <span className="text-center">Or go to <ExternalLink to={link}>{link} <ArrowUpRight /></ExternalLink></span>
     </DialogContent>
-  )
+  );
 }

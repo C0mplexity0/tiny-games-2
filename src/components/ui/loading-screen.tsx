@@ -3,13 +3,13 @@ import { TinyGamesLogoWithText } from "./logo";
 import { animate } from "motion";
 
 export default function LoadingScreen({ loaded }: { loaded: boolean }) {
-  const GRADIENT_WIDTH = 20
+  const GRADIENT_WIDTH = 20;
 
-  const fade = useMotionValue(`${-GRADIENT_WIDTH}%`)
-  const maskImage = useMotionTemplate`radial-gradient(circle,rgba(0, 0, 0, 0) ${fade}, rgba(0, 0, 0, 1) calc(${fade} + ${GRADIENT_WIDTH}%))`
+  const fade = useMotionValue(`${-GRADIENT_WIDTH}%`);
+  const maskImage = useMotionTemplate`radial-gradient(circle,rgba(0, 0, 0, 0) ${fade}, rgba(0, 0, 0, 1) calc(${fade} + ${GRADIENT_WIDTH}%))`;
 
   if (loaded)
-    animate(fade, `100%`, { duration: .3 })
+    animate(fade, `100%`, { duration: .3 });
 
   return (
     <motion.div 
@@ -23,5 +23,5 @@ export default function LoadingScreen({ loaded }: { loaded: boolean }) {
         <TinyGamesLogoWithText className="w-64" />
       </div>
     </motion.div>
-  )
+  );
 }

@@ -7,5 +7,5 @@ export default function Subtitle({ className, ...props }: React.HTMLAttributes<H
       "text-xl font-semibold",
       className
     )} {...props} ></h2>
-  )
+  );
 }

@@ -7,10 +7,10 @@ export default class Game {
   }
 
   getName() {
-    return this.name
+    return this.name;
   }
 
   getConfig() {
-    return this.config
+    return this.config;
   }
 }

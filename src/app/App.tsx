@@ -33,38 +33,38 @@ function WindowButton({ children, onClick, tooltip }: { children: ReactNode, onC
           <p>{tooltip}</p>
         </TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 let loaded = false;
 let setLoaded: (loaded: boolean) => void;
 
 export function App() {
-  [loaded, setLoaded] = useState(false)
-  const window = getCurrentWindow()
-  const [isMaximized, setIsMaximized] = useState<boolean>(false)
+  [loaded, setLoaded] = useState(false);
+  const window = getCurrentWindow();
+  const [isMaximized, setIsMaximized] = useState<boolean>(false);
 
   useEffect(() => {
     if (!loaded) {
       init().then(() => {
-        setLoaded(true)
-      })
+        setLoaded(true);
+      });
     }
-  })
+  });
 
   const fetchIsMaximised = async () => {
-    setIsMaximized(await window.isMaximized())
-  }
+    setIsMaximized(await window.isMaximized());
+  };
 
   useEffect(() => {
     const listener = window.onResized(() => {
-      fetchIsMaximised()
-    })
+      fetchIsMaximised();
+    });
 
     return () => {
-      listener.then((f) => f())
-    }
-  }, [])
+      listener.then((f) => f());
+    };
+  }, []);
 
   return (
     <main className="size-full flex flex-col">
@@ -98,7 +98,7 @@ export function App() {
         </div>
         <WindowButton
           onClick={() => {
-            window.minimize()
+            window.minimize();
           }}
           tooltip="Minimise"
         >
@@ -106,7 +106,7 @@ export function App() {
         </WindowButton>
         <WindowButton
           onClick={() => {
-            window.toggleMaximize()
+            window.toggleMaximize();
           }}
           tooltip="Toggle maximise"
         >
@@ -115,7 +115,7 @@ export function App() {
         <WindowButton
           tooltip="Close"
           onClick={() => {
-            window.close()
+            window.close();
           }}
         >
             <LucideX />
@@ -124,5 +124,5 @@ export function App() {
       <RouterProvider router={router} />
       <Toaster position="bottom-right" />
     </main>
-  )
+  );
 }
