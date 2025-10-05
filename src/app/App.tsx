@@ -11,6 +11,7 @@ import LoadingScreen from "@/components/ui/loading-screen";
 import { Toaster } from "sonner";
 import { init } from "./main.ts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
 
 const router = createBrowserRouter([
   {
@@ -79,14 +80,23 @@ export function App() {
         </div>
         <div className="h-9 border rounded-full flex flex-row p-0.75 gap-0.5">
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon-sm" variant="secondary" className="rounded-full">
-                <LucidePlus />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Connect device</p>
-            </TooltipContent>
+            <Dialog>
+              <DialogTrigger asChild>
+                <TooltipTrigger asChild>
+                  <Button size="icon-sm" variant="secondary" className="rounded-full">
+                    <LucidePlus />
+                  </Button>
+                </TooltipTrigger>
+              </DialogTrigger>
+              <TooltipContent>
+                <p>Connect device</p>
+              </TooltipContent>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Connect a device</DialogTitle>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </Tooltip>
         </div>
         <WindowButton
