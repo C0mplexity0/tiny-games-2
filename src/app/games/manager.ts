@@ -22,10 +22,12 @@ export class GamesManagerFetchedGamesEvent extends Event {
 export default class GamesManager {
 
   private games: Game[]
+  private fetchingGames: boolean
   private onFetchedGamesEvent: EventHandler<GamesManagerFetchedGamesEvent>
 
   constructor (private rootDir: string) {
     this.games = []
+    this.fetchingGames = false
 
     this.onFetchedGamesEvent = new EventHandler()
   }
@@ -59,9 +61,8 @@ export default class GamesManager {
       description: `${gameName}: ${description}`
     })
   }
-
-  async fetchGames() {
-    this.games = []
+  
+  private async fetchGameFiles() {
     const gamesPath = this.getGamesPath()
 
     const entries = await readDataDir(gamesPath)
@@ -98,6 +99,27 @@ export default class GamesManager {
         console.warn("Game config appears to be missing certain fields: " + entries[i].name)
       }
     }
+  }
+
+  async fetchGames() {
+    if (this.fetchingGames)
+      return
+
+    this.fetchingGames = true
+
+    this.games = []
+    
+    try {
+      await this.fetchGameFiles()
+    } catch(err) {
+      console.error(err);
+      toast({
+        title: "Couldn't fetch games",
+        description: `An unknown error occurred.`
+      })
+    }
+
+    this.fetchingGames = false
 
     const event = new GamesManagerFetchedGamesEvent(this.getGames())
     this.onFetchedGamesEvent.fire(event)
