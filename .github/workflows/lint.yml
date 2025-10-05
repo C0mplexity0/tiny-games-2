@@ -1,10 +1,10 @@
-name: "publish"
+name: "lint"
 
 on: [push]
 
 
 jobs:
-  lint:
+  tauri-lint:
     permissions:
       contents: write
     strategy:
