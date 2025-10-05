@@ -62,7 +62,6 @@ export default function AppHomePage() {
                 size="icon-sm"
                 onClick={async () => {
                   const path = await appDataDir() + sep() + applyPathPrefix(gamesManager.getGamesPath());
-                  console.log(path)
                   await openPath(path);
                 }}
               >
