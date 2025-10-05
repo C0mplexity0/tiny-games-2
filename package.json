@@ -8,8 +8,7 @@
     "build": "tsc && vite build src/app && vite build src/web",
     "preview": "vite preview",
     "tauri": "tauri",
-    "tauri:build": "NO_STRIP=true pnpm tauri build",
-    "tauri:dev": "tauri dev"
+    "linuxbuild": "NO_STRIP=true pnpm tauri build"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
