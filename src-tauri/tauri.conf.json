@@ -39,7 +39,7 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["../src/web/dist/**/*"]
+    "resources": ["../resources/web/**/*"]
   },
   "plugins": {
     "fs": {
