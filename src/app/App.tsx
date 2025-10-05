@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LucideChevronDown, LucideChevronUp, LucideMinus, LucideX } from "lucide-react";
+import { LucideChevronDown, LucideChevronUp, LucideMinus, LucidePlus, LucideX } from "lucide-react";
 import { RouterProvider } from "react-router";
 import { createBrowserRouter } from "react-router";
 
@@ -23,7 +23,7 @@ function WindowButton({ children, onClick, tooltip }: { children: ReactNode, onC
   return (
     <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"secondary"} size={"icon"} className="size-8" onClick={onClick}>
+          <Button variant={"secondary"} size={"icon"} className="rounded-full" onClick={onClick}>
             {children}
           </Button>
         </TooltipTrigger>
@@ -69,13 +69,25 @@ export function App() {
       <LoadingScreen loaded={loaded} />
       <div className="bg-card h-11 p-1 w-full flex flex-row gap-1">
         <div 
-          className="bg-card h-7 w-full flex-1 flex items-center p-1.5"
+          className="bg-card h-full w-full flex-1 flex items-center p-1.5"
           style={{
             userSelect: "none"
           }}
           data-tauri-drag-region
         >
           <TinyGamesLogoWithText className="pointer-events-none w-28" />
+        </div>
+        <div className="h-9 border rounded-full flex flex-row p-0.75 gap-0.5">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon-sm" variant="secondary" className="rounded-full">
+                <LucidePlus />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Connect device</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <WindowButton
           onClick={() => {
