@@ -21,8 +21,8 @@ export default function AppHomePage() {
     const listener = (event: GamesManagerFetchedGamesEvent) => {
       const games = event.getGames()
       setGames(games)
-
-      if (!games[selectedGame]) {
+      
+      if (games[selectedGame] === undefined) {
         setSelectedGame(0)
       }
     }

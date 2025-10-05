@@ -130,7 +130,7 @@ export default class GamesManager {
   }
 
   offFetchedGames(callback: Listener<GamesManagerFetchedGamesEvent>) {
-    this.onFetchedGamesEvent.addListener(callback)
+    this.onFetchedGamesEvent.removeListener(callback)
   }
 
   getGames() {
