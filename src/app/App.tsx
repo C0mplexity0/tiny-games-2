@@ -25,7 +25,7 @@ function WindowButton({ children, onClick, tooltip }: { children: ReactNode, onC
   return (
     <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant={"secondary"} size={"icon"} className="rounded-full" onClick={onClick}>
+          <Button variant={"ghost"} size={"icon"} className="rounded-none h-full w-11" onClick={onClick}>
             {children}
           </Button>
         </TooltipTrigger>
@@ -69,57 +69,61 @@ export function App() {
   return (
     <main className="size-full flex flex-col">
       <LoadingScreen loaded={loaded} />
-      <div className="bg-card h-11 p-1 w-full flex flex-row gap-1">
-        <div 
-          className="bg-card h-full w-full flex-1 flex items-center p-1.5"
-          style={{
-            userSelect: "none"
-          }}
-          data-tauri-drag-region
-        >
-          <TinyGamesLogoWithText className="pointer-events-none w-28" />
+      <div className="h-11 flex flex-row bg-background-secondary">
+        <div className="bg-background-secondary h-11 p-1 flex-1 flex flex-row gap-1">
+          <div 
+            className="bg-background-secondary h-full w-full flex-1 flex items-center p-1.5"
+            style={{
+              userSelect: "none"
+            }}
+            data-tauri-drag-region
+          >
+            <TinyGamesLogoWithText className="pointer-events-none w-28" />
+          </div>
+          <div className="h-9 border rounded-full flex flex-row p-0.75 gap-0.5">
+            <Tooltip>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <TooltipTrigger asChild>
+                    <Button size="icon-sm" variant="secondary" className="rounded-full">
+                      <LucidePlus />
+                    </Button>
+                  </TooltipTrigger>
+                </DialogTrigger>
+                <TooltipContent>
+                  <p>Connect device</p>
+                </TooltipContent>
+                <DeviceConnectDialogueContent />
+              </Dialog>
+            </Tooltip>
+          </div>
         </div>
-        <div className="h-9 border rounded-full flex flex-row p-0.75 gap-0.5">
-          <Tooltip>
-            <Dialog>
-              <DialogTrigger asChild>
-                <TooltipTrigger asChild>
-                  <Button size="icon-sm" variant="secondary" className="rounded-full">
-                    <LucidePlus />
-                  </Button>
-                </TooltipTrigger>
-              </DialogTrigger>
-              <TooltipContent>
-                <p>Connect device</p>
-              </TooltipContent>
-              <DeviceConnectDialogueContent />
-            </Dialog>
-          </Tooltip>
+        <div>
+          <WindowButton
+            onClick={() => {
+              window.minimize();
+            }}
+            tooltip="Minimise"
+          >
+              <LucideMinus />
+          </WindowButton>
+          <WindowButton
+            onClick={() => {
+              window.toggleMaximize();
+            }}
+            tooltip="Toggle maximise"
+          >
+              {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
+          </WindowButton>
+          <WindowButton
+            tooltip="Close"
+            onClick={() => {
+              window.close();
+            }}
+          >
+              <LucideX />
+          </WindowButton>
         </div>
-        <WindowButton
-          onClick={() => {
-            window.minimize();
-          }}
-          tooltip="Minimise"
-        >
-            <LucideMinus />
-        </WindowButton>
-        <WindowButton
-          onClick={() => {
-            window.toggleMaximize();
-          }}
-          tooltip="Toggle maximise"
-        >
-            {isMaximized ? <LucideChevronDown /> : <LucideChevronUp />}
-        </WindowButton>
-        <WindowButton
-          tooltip="Close"
-          onClick={() => {
-            window.close();
-          }}
-        >
-            <LucideX />
-        </WindowButton>
       </div>
       <RouterProvider router={router} />
       <Toaster position="bottom-right" />
