@@ -38,6 +38,24 @@ function GameButton({ game, selected, onClick }: { game: Game, selected: boolean
   );
 }
 
+function GameMenu({ game }: { game: Game }) {
+  const [path, setPath] = useState<string | undefined>();
+
+  useEffect(() => {
+    join(gamesManager.getGamesPath(), game.getName(), game.getConfig().thumbnail).then((val) => {
+      setPath(val);
+    });
+  }, []);
+
+  return (
+    <div className="p-4">
+      <div className="overflow-hidden relative w-full border rounded-lg bg-background-secondary h-48 xl:h-72">
+        <ImgFile src={path} className="absolute top-1/2 left-1/2 -translate-1/2 w-full" />
+      </div>
+    </div>
+  );
+}
+
 export default function AppHomePage() {
   const [selectedGame, setSelectedGame] = useState(0);
   const [games, setGames] = useState(gamesManager.getGames());
@@ -129,7 +147,8 @@ export default function AppHomePage() {
       </ResizablePanel>
       <ResizableHandle className="border-none bg-transparent" />
       <ResizablePanel minSize={30} defaultSize={75} className="min-w-100 rounded-tl-xl border-t border-l size-full bg-background">
-        {games[selectedGame] ? undefined : 
+        {games[selectedGame] ? 
+          <GameMenu game={games[selectedGame]} /> : 
           <div className="flex justify-center items-center size-full">
             <Empty>
               <EmptyHeader>

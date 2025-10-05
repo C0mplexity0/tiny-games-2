@@ -6,7 +6,8 @@ import { Event, EventHandler, Listener } from "@/util/event/event";
 
 export interface GameConfig {
   displayName: string,
-  icon: string
+  icon: string,
+  thumbnail: string
 }
 
 export class GamesManagerFetchedGamesEvent extends Event {
@@ -51,7 +52,7 @@ export default class GamesManager {
   }
 
   private jsonIsGameConfig(value: GameConfig): value is GameConfig {
-    if (value.displayName && value.icon && value.displayName.length <= 20)
+    if (value.displayName && value.icon && value.thumbnail && value.displayName.length <= 20)
       return true;
     return false;
   }

@@ -7,6 +7,7 @@
   --radius-lg: 16px;
   --radius-xl: 32px;
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
