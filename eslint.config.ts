@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import stylistic from "@stylistic/eslint-plugin";
 
 export default defineConfig([
-  globalIgnores(["**/dist/**/*", "src-tauri/**/*", "node_modules/**/*"]),
+  globalIgnores(["**/dist/**/*", "src-tauri/**/*", "node_modules/**/*", "**/.vite/**/*"]),
   { 
     files: ["src/**/*.{ts,mts,cts,tsx}"],
     plugins: { js, '@stylistic': stylistic }, 
