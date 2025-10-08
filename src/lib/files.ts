@@ -118,8 +118,6 @@ function arrayBufferToBase64(buffer: Uint8Array<ArrayBuffer>, callback: (val: st
 
 export async function fetchImg(path: string) {
   const fileExists = await dataFileExists(path);
-  console.log(path);
-  console.log(fileExists);
   if (!fileExists)
     return;
 
