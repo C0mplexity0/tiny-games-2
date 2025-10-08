@@ -2,8 +2,8 @@ import { fetchImg } from "@/lib/files";
 import React, { useEffect, useState } from "react";
 
 export default function ImgFile(
-  { src, ...props }:
-  React.ImgHTMLAttributes<HTMLImageElement>
+  { src, alt, ...props }:
+  React.ImgHTMLAttributes<HTMLImageElement> & {alt: string}
 ) {
   const [base64Src, setBase64Src] = useState<string | undefined>();
 
@@ -17,6 +17,6 @@ export default function ImgFile(
   }, [src]);
 
   return (
-    <img src={base64Src} {...props} />
+    <img alt={alt} src={base64Src} {...props} />
   );
 }

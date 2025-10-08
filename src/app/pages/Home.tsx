@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import Subtitle from "@/components/ui/text";
+import { Title, Subtitle } from "@/components/ui/text";
 import { ArrowUpRightIcon, LucideFolder, LucideGamepad, LucidePlus, LucideRefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { gamesManager } from "../main.ts";
@@ -31,7 +31,7 @@ function GameButton({ game, selected, onClick }: { game: Game, selected: boolean
       onClick={onClick}
     >
       <div className="bg-secondary size-7 rounded-sm border overflow-hidden">
-        <ImgFile src={path} />
+        <ImgFile alt="Game icon" src={path} />
       </div>
       <span className="flex-1">{game.getConfig().displayName}</span>
     </Button>
@@ -39,18 +39,30 @@ function GameButton({ game, selected, onClick }: { game: Game, selected: boolean
 }
 
 function GameMenu({ game }: { game: Game }) {
-  const [path, setPath] = useState<string | undefined>();
+  const [thumbnailPath, setThumbnailPath] = useState<string | undefined>();
+  const [iconPath, setIconPath] = useState<string | undefined>();
 
   useEffect(() => {
     join(gamesManager.getGamesPath(), game.getName(), game.getConfig().thumbnail).then((val) => {
-      setPath(val);
+      setThumbnailPath(val);
+    });
+    join(gamesManager.getGamesPath(), game.getName(), game.getConfig().icon).then((val) => {
+      setIconPath(val);
     });
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 flex flex-col gap-4">
       <div className="overflow-hidden relative w-full border rounded-lg bg-background-secondary h-48 xl:h-72">
-        <ImgFile src={path} className="absolute top-1/2 left-1/2 -translate-1/2 w-full" />
+        <ImgFile alt="Game thumbnail" src={thumbnailPath} className="absolute top-1/2 left-1/2 -translate-1/2 w-full" />
+      </div>
+      <div className="w-full flex flex-row gap-4">
+        <div className="overflow-hidden relative border rounded-lg bg-background-secondary size-45.5">
+          <ImgFile alt="Game icon" src={iconPath} className="absolute top-1/2 left-1/2 -translate-1/2 w-full" />
+        </div>
+        <div>
+          <Title>{game.getConfig().displayName}</Title>
+        </div>
       </div>
     </div>
   );
